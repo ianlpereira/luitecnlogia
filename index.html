@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="LUi — Tecnologia construída por pessoas. Somos uma empresa de tecnologia focada em criar soluções digitais com propósito." />
+  <meta property="og:title" content="LUi — Empresa de Tecnologia" />
+  <meta property="og:description" content="Tecnologia construída por pessoas." />
+  <meta property="og:type" content="website" />
+  <title>LUi — Empresa de Tecnologia</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@600;700&family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- ===================== HEADER ===================== -->
+  <header class="site-header" role="banner">
+    <div class="container header-inner">
+      <a href="#hero" class="site-logo" aria-label="LUi — página inicial">
+        <svg class="logo-svg" viewBox="0 0 80 30" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+          <text font-family="'Exo 2', sans-serif" font-weight="700" font-size="26" fill="#ffffff" letter-spacing="4" x="1" y="22">LU<tspan fill="#009f93">i</tspan></text>
+        </svg>
+      </a>
+      <nav class="site-nav" aria-label="Navegação principal">
+        <ul class="nav-list" role="list">
+          <li><a href="#about" class="nav-link">Sobre</a></li>
+          <li><a href="#services" class="nav-link">Serviços</a></li>
+          <li><a href="#why" class="nav-link">Por que <span class="brand-name">LU<span class="accent-i">i</span></span></a></li>
+          <li><a href="#contact" class="nav-link nav-link--cta">Contato</a></li>
+        </ul>
+      </nav>
+      <button class="hamburger" aria-label="Abrir menu" aria-expanded="false" aria-controls="mobile-nav">
+        <span class="hamburger-line"></span>
+        <span class="hamburger-line"></span>
+        <span class="hamburger-line"></span>
+      </button>
+    </div>
+  </header>
+
+  <!-- Mobile nav overlay -->
+  <div class="mobile-nav" id="mobile-nav" aria-hidden="true">
+    <nav aria-label="Navegação mobile">
+      <ul class="mobile-nav-list" role="list">
+        <li><a href="#about" class="mobile-nav-link">Sobre</a></li>
+        <li><a href="#services" class="mobile-nav-link">Serviços</a></li>
+        <li><a href="#why" class="mobile-nav-link">Por que <span class="brand-name">LU<span class="accent-i">i</span></span></a></li>
+        <li><a href="#contact" class="mobile-nav-link">Contato</a></li>
+      </ul>
+    </nav>
+  </div>
+
+  <main>
+
+    <!-- ===================== HERO ===================== -->
+    <section class="hero" id="hero" aria-labelledby="hero-heading">
+      <div class="container hero-inner">
+        <span class="eyebrow">Empresa de Tecnologia</span>
+        <h1 id="hero-heading" class="hero-heading">
+          Tecnologia construída<br />por pessoas.
+        </h1>
+        <p class="hero-subtext">
+          Transformamos desafios complexos em soluções digitais que impulsionam o crescimento do seu negócio — com inovação, estratégia e propósito.
+        </p>
+        <div class="hero-actions">
+          <a href="#contact" class="btn btn-primary">Fale conosco</a>
+          <a href="#services" class="btn btn-ghost">Conheça nossos serviços</a>
+        </div>
+      </div>
+      <!-- Animated SVG blobs -->
+      <svg class="blob blob--hero-main" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <path class="js-blob" fill="rgba(0,159,147,0.18)" />
+      </svg>
+      <svg class="blob blob--hero-secondary" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <path class="js-blob" fill="rgba(3,113,113,0.14)" />
+      </svg>
+    </section>
+
+    <!-- ===================== ABOUT ===================== -->
+    <section class="about" id="about" aria-labelledby="about-heading">
+      <svg class="blob blob--about" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <path class="js-blob" fill="rgba(0,159,147,0.07)" />
+      </svg>
+      <div class="container about-inner">
+        <div class="about-content">
+          <span class="section-tag">Sobre nós</span>
+          <h2 id="about-heading" class="section-heading">Soluções que duram.</h2>
+          <p class="about-text">
+            A <span class="brand-name">LU<span class="accent-i">i</span></span> acredita que as melhores tecnologias são construídas com as pessoas no centro — não apenas como usuárias, mas como parte do processo. Trabalhamos lado a lado com nossos clientes para entender fundo cada desafio e entregar produtos digitais que realmente fazem diferença.
+          </p>
+          <p class="about-text">
+            Mais do que desenvolver software, construímos tecnologia com propósito — gerando valor duradouro para quem confia no nosso trabalho.
+          </p>
+        </div>
+        <div class="about-accent" aria-hidden="true">
+          <div class="about-accent-block"></div>
+          <div class="about-stat">
+            <span class="about-stat-number">2026</span>
+            <span class="about-stat-label">Ano de fundação</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== SERVICES ===================== -->
+    <section class="services" id="services" aria-labelledby="services-heading">
+      <svg class="blob blob--services" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <path class="js-blob" fill="rgba(40,39,67,0.05)" />
+      </svg>
+      <div class="container">
+        <div class="section-header">
+          <span class="section-tag">O que fazemos</span>
+          <h2 id="services-heading" class="section-heading">Nossos serviços</h2>
+          <p class="section-subtext">Do planejamento à entrega, cuidamos de cada etapa com atenção e expertise.</p>
+        </div>
+        <ul class="services-grid" role="list">
+          <li class="service-card">
+            <div class="service-icon" aria-hidden="true">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/>
+              </svg>
+            </div>
+            <h3 class="service-title">Desenvolvimento Web</h3>
+            <p class="service-description">Aplicações web modernas, rápidas e acessíveis — do design à implantação em produção.</p>
+          </li>
+          <li class="service-card">
+            <div class="service-icon" aria-hidden="true">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" y1="18" x2="12.01" y2="18"/>
+              </svg>
+            </div>
+            <h3 class="service-title">Aplicativos Mobile</h3>
+            <p class="service-description">Experiências nativas e híbridas para iOS e Android, focadas em usabilidade e performance.</p>
+          </li>
+          <li class="service-card">
+            <div class="service-icon" aria-hidden="true">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>
+              </svg>
+            </div>
+            <h3 class="service-title">Consultoria Técnica</h3>
+            <p class="service-description">Arquitetura de sistemas, revisão de código e suporte estratégico para equipes de tecnologia.</p>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ===================== WHY LUi ===================== -->
+    <section class="why" id="why" aria-labelledby="why-heading">
+      <svg class="blob blob--why" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <path class="js-blob" fill="rgba(0,159,147,0.12)" />
+      </svg>
+      <svg class="blob blob--why-secondary" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <path class="js-blob" fill="rgba(3,113,113,0.08)" />
+      </svg>
+      <div class="container">
+        <div class="section-header section-header--light">
+          <span class="section-tag section-tag--light">Nossos diferenciais</span>
+          <h2 id="why-heading" class="section-heading section-heading--light">Por que <span class="brand-name brand-name--tight">LU<span class="accent-i">i</span></span>?</h2>
+        </div>
+        <ul class="why-grid" role="list">
+          <li class="why-item">
+            <div class="why-icon" aria-hidden="true">
+              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+              </svg>
+            </div>
+            <h3 class="why-title">Pessoas primeiro</h3>
+            <p class="why-description">Cada decisão técnica começa pela experiência de quem vai usar o produto. Tecnologia a serviço das pessoas.</p>
+          </li>
+          <li class="why-item">
+            <div class="why-icon" aria-hidden="true">
+              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+              </svg>
+            </div>
+            <h3 class="why-title">Qualidade sem concessões</h3>
+            <p class="why-description">Código limpo, testes, documentação e entregas revisadas. Cada detalhe importa quando o produto é para durar.</p>
+          </li>
+          <li class="why-item">
+            <div class="why-icon" aria-hidden="true">
+              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
+              </svg>
+            </div>
+            <h3 class="why-title">Agilidade com consistência</h3>
+            <p class="why-description">Entregas rápidas sem abrir mão da solidez. Sprints curtos, comunicação direta e resultados concretos.</p>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ===================== CONTACT ===================== -->
+    <section class="contact" id="contact" aria-labelledby="contact-heading">
+      <svg class="blob blob--contact" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <path class="js-blob" fill="rgba(0,159,147,0.07)" />
+      </svg>
+      <div class="container contact-inner">
+        <div class="section-header">
+          <span class="section-tag">Vamos conversar</span>
+          <h2 id="contact-heading" class="section-heading">Entre em contato</h2>
+          <p class="section-subtext">Tem um projeto em mente? Nos conte mais — estamos prontos para ajudar.</p>
+        </div>
+        <form class="contact-form" action="#" method="post" novalidate>
+          <div class="form-field">
+            <label class="form-label" for="name">Nome</label>
+            <input class="form-input" type="text" id="name" name="name" placeholder="Seu nome completo" autocomplete="name" required />
+          </div>
+          <div class="form-field">
+            <label class="form-label" for="email">E-mail</label>
+            <input class="form-input" type="email" id="email" name="email" placeholder="seu@email.com" autocomplete="email" required />
+          </div>
+          <div class="form-field">
+            <label class="form-label" for="message">Mensagem</label>
+            <textarea class="form-input form-textarea" id="message" name="message" placeholder="Descreva seu projeto ou dúvida..." rows="5" required></textarea>
+          </div>
+          <button type="submit" class="btn btn-primary btn-submit">Enviar mensagem</button>
+        </form>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ===================== FOOTER ===================== -->
+  <footer class="site-footer" role="contentinfo">
+    <div class="container footer-inner">
+      <svg class="logo-svg logo-svg--sm" viewBox="0 0 80 30" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="LUi">
+        <title>LUi</title>
+        <text font-family="'Exo 2', sans-serif" font-weight="700" font-size="26" fill="#ffffff" letter-spacing="4" x="1" y="22">LU<tspan fill="#009f93">i</tspan></text>
+      </svg>
+      <p class="footer-legal">© 2026 <span class="brand-name">LU<span class="accent-i">i</span></span> — Empresa de Tecnologia. Todos os direitos reservados.</p>
+    </div>
+  </footer>
+
+  <script src="main.js"></script>
+</body>
+</html>

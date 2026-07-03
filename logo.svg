@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 30" role="img" aria-label="LUi">
+  <title>LUi</title>
+  <defs>
+    <style><![CDATA[
+      @import url('https://fonts.googleapis.com/css2?family=Exo+2:wght@700&display=swap');
+    ]]></style>
+  </defs>
+  <text
+    font-family="'Exo 2', Rajdhani, sans-serif"
+    font-weight="700"
+    font-size="26"
+    fill="#ffffff"
+    letter-spacing="4"
+    x="1"
+    y="22">LU<tspan fill="#009f93">i</tspan></text>
+</svg>
