@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+  <rect width="32" height="32" rx="6" fill="#282743"/>
+  <text
+    x="16" y="23"
+    font-family="'Exo 2', sans-serif"
+    font-weight="700"
+    font-size="18"
+    text-anchor="middle"
+    fill="#f7faff"
+    letter-spacing="1"
+  >LU<tspan fill="#05ccbb">i</tspan></text>
+</svg>
