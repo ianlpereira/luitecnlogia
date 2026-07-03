@@ -4,7 +4,7 @@
 :root {
   /* Colors */
   --color-primary:       #282743;
-  --color-accent:        #009f93;
+  --color-accent:        #05ccbb;
   --color-accent-dark:   #037171;
   --color-surface:       #f7faff;
   --color-surface-soft:  #f0f3f8;
@@ -167,7 +167,7 @@ button {
 
 .btn:focus-visible {
   outline: none;
-  box-shadow: 0 0 0 3px rgba(0, 159, 147, 0.4);
+  box-shadow: 0 0 0 3px rgba(5, 204, 187, 0.4);
 }
 
 .btn-primary {
@@ -227,7 +227,7 @@ button {
 .site-logo:focus-visible {
   outline: none;
   border-radius: 4px;
-  box-shadow: 0 0 0 3px rgba(0, 159, 147, 0.4);
+  box-shadow: 0 0 0 3px rgba(5, 204, 187, 0.4);
 }
 
 .logo-svg {
@@ -322,7 +322,7 @@ button {
 
 .hamburger:focus-visible {
   outline: none;
-  box-shadow: 0 0 0 3px rgba(0, 159, 147, 0.4);
+  box-shadow: 0 0 0 3px rgba(5, 204, 187, 0.4);
   border-radius: var(--radius-sm);
 }
 
@@ -369,7 +369,7 @@ button {
 
 .mobile-nav-link:focus-visible {
   outline: none;
-  box-shadow: 0 0 0 3px rgba(0, 159, 147, 0.4);
+  box-shadow: 0 0 0 3px rgba(5, 204, 187, 0.4);
   border-radius: 2px;
 }
 
@@ -615,7 +615,7 @@ button {
   width: 52px;
   height: 52px;
   border-radius: var(--radius-sm);
-  background-color: rgba(0, 159, 147, 0.1);
+  background-color: rgba(5, 204, 187, 0.1);
   color: var(--color-accent);
   display: flex;
   align-items: center;
@@ -661,7 +661,7 @@ button {
   width: 56px;
   height: 56px;
   border-radius: var(--radius-sm);
-  background-color: rgba(0, 159, 147, 0.15);
+  background-color: rgba(5, 204, 187, 0.15);
   color: var(--color-accent);
   display: flex;
   align-items: center;
@@ -735,13 +735,13 @@ button {
 .form-input:focus {
   outline: none;
   border-color: var(--color-accent);
-  box-shadow: 0 0 0 3px rgba(0, 159, 147, 0.15);
+  box-shadow: 0 0 0 3px rgba(5, 204, 187, 0.15);
 }
 
 .form-input:focus-visible {
   outline: none;
   border-color: var(--color-accent);
-  box-shadow: 0 0 0 3px rgba(0, 159, 147, 0.15);
+  box-shadow: 0 0 0 3px rgba(5, 204, 187, 0.15);
 }
 
 .form-textarea {

@@ -2,14 +2,14 @@
 
 ## Overview
 
-LUi is a technology company whose brand is built on the premise of **"Tecnologia construída por pessoas"** — technology built by people. Every interface must reflect that human-centred commitment: purposeful, clear, and durable. The base canvas is a near-white ice blue (`{colors.surface}` — #f7faff) with deep navy (`{colors.primary}` — #282743) carrying all primary text and structural framing, and a single teal voltage (`{colors.accent}` — #009f93) driving every primary CTA, active indicator, focus ring, and interactive highlight. The darker teal (`{colors.accent-dark}` — #037171) is reserved strictly for hover and pressed states on accent elements — it never appears independently.
+LUi is a technology company whose brand is built on the premise of **"Tecnologia construída por pessoas"** — technology built by people. Every interface must reflect that human-centred commitment: purposeful, clear, and durable. The base canvas is a near-white ice blue (`{colors.surface}` — #f7faff) with deep navy (`{colors.primary}` — #282743) carrying all primary text and structural framing, and a single teal voltage (`{colors.accent}` — #05ccbb) driving every primary CTA, active indicator, focus ring, and interactive highlight. The darker teal (`{colors.accent-dark}` — #037171) is reserved strictly for hover and pressed states on accent elements — it never appears independently.
 
 Type runs **Exo 2** for all display and heading contexts, and **Montserrat** for all body, UI, and form copy. The split is hard — never blend the two at the same hierarchy tier. Montserrat's semi-bold at 600 carries the majority of UI labels and navigation; Exo 2's weight 700 is reserved for headings and the brand wordmark.
 
 The shape language is **soft but grounded**. Buttons and inputs sit at 6–8px radius. Cards use 12px radius. Fully rounded elements (pills, badges) are reserved for tags and status chips only — the system avoids decorative pill shapes on structural components. There are no hard 0px corners anywhere on interactive surfaces.
 
 **Key Characteristics:**
-- Two-color accent system: `{colors.accent}` (#009f93) as the primary action color; `{colors.accent-dark}` (#037171) as the pressed/hover state. Used with restraint — most pages are 90% navy + ghost-white with one teal moment per interactive section.
+- Two-color accent system: `{colors.accent}` (#05ccbb) as the primary action color; `{colors.accent-dark}` (#037171) as the pressed/hover state. Used with restraint — most pages are 90% navy + ghost-white with one teal moment per interactive section.
 - Two-typeface system: **Exo 2** (display, headings, wordmark) and **Montserrat** (everything else). No third typeface is permitted under any circumstance.
 - 8px base spacing grid. All tokens are multiples of 8, with a 4px micro-step for icon gaps and dense list rows.
 - One shadow tier: cards and modals share the same shadow definition — the system never stacks elevation tiers.
@@ -20,9 +20,9 @@ The shape language is **soft but grounded**. Buttons and inputs sit at 6–8px r
 ## Colors
 
 ### Brand & Accent
-- **Teal** (`{colors.accent}` — #009f93): The single action color. Used on primary CTA backgrounds, active nav indicators, focus rings, links, and interactive icon fills. The most recognizable color in every LUi interface.
+- **Teal** (`{colors.accent}` — #05ccbb): The single action color. Used on primary CTA backgrounds, active nav indicators, focus rings, links, and interactive icon fills. The most recognizable color in every LUi interface.
 - **Dark Teal** (`{colors.accent-dark}` — #037171): The hover and pressed variant of the accent. Applied on `{component.button-primary-hover}` and `{component.button-primary-active}`. Never used as a standalone fill or for any purpose other than accent state transitions.
-- **Teal Disabled** (`{colors.accent-disabled}` — #009f93 at 40% opacity): Used on disabled primary CTAs to preserve brand color while communicating unavailability.
+- **Teal Disabled** (`{colors.accent-disabled}` — #05ccbb at 40% opacity): Used on disabled primary CTAs to preserve brand color while communicating unavailability.
 
 ### Surface
 - **Deep Navy** (`{colors.primary}` — #282743): The primary structural color. Used as the app header background, dark section fills, hero overlays, and the default text color on light surfaces.
@@ -45,7 +45,7 @@ The shape language is **soft but grounded**. Buttons and inputs sit at 6–8px r
 - **Warning** (`{colors.warning}` — #d97706): Warning banners, non-blocking alert text, and attention indicators.
 - **Error** (`{colors.error}` — #dc2626): Inline form validation errors and critical alert text. Distinct from the accent teal — never use teal to communicate error.
 - **Error Hover** (`{colors.error-hover}` — #b91c1c): Darkens on hover for error-linked actions.
-- **Info** (`{colors.info}` — #009f93): Informational callouts reuse the accent teal — only appropriate when the callout is non-critical and brand-tone aligned.
+- **Info** (`{colors.info}` — #05ccbb): Informational callouts reuse the accent teal — only appropriate when the callout is non-critical and brand-tone aligned.
 
 ### Scrim
 - **Scrim** (`{colors.scrim}` — #282743 at 50% opacity): The modal backdrop tone used behind dialogs, drawers, and full-screen overlays. Stored as the base hex; opacity is applied at render time.
@@ -54,7 +54,7 @@ The shape language is **soft but grounded**. Buttons and inputs sit at 6–8px r
 
 ```css
 :root {
-  --color-accent:        #009f93;
+  --color-accent:        #05ccbb;
   --color-accent-dark:   #037171;
   --color-primary:       #282743;
   --color-surface:       #f7faff;
@@ -158,7 +158,7 @@ There are no progressive tiers between card hover and modal — the system eithe
 
 ### Buttons
 
-**`button-primary`** — Teal fill (`#009f93`), white text, 6px radius, `12px 24px` padding, 44px min-height, Montserrat 700 at 14px. The default action in every form, dialog, and primary flow: "Salvar", "Confirmar", "Continuar".
+**`button-primary`** — Teal fill (`#05ccbb`), white text, 6px radius, `12px 24px` padding, 44px min-height, Montserrat 700 at 14px. The default action in every form, dialog, and primary flow: "Salvar", "Confirmar", "Continuar".
 
 **`button-primary-hover`** — Background flips to `{colors.accent-dark}` (#037171). No transform, no shadow change. Transition: `background-color 0.2s ease`.
 
@@ -264,7 +264,7 @@ There are no progressive tiers between card hover and modal — the system eithe
 
 ## Accessibility
 
-- **Color contrast:** minimum **4.5:1** for normal text, **3:1** for large text (WCAG AA). `{colors.ink}` (#282743) on `{colors.surface}` (#f7faff) passes AAA. `{colors.accent}` (#009f93) on white is insufficient for body text — use only at Bold/large text sizes, or pair with an additional visual indicator (icon, underline).
+- **Color contrast:** minimum **4.5:1** for normal text, **3:1** for large text (WCAG AA). `{colors.ink}` (#282743) on `{colors.surface}` (#f7faff) passes AAA. `{colors.accent}` (#05ccbb) on white is insufficient for body text — use only at Bold/large text sizes, or pair with an additional visual indicator (icon, underline).
 - All interactive elements must be keyboard-navigable in logical DOM order.
 - Focus ring: `box-shadow: 0 0 0 3px rgba(0, 159, 147, 0.4)` — visible on all focusable elements. Do not suppress outlines without providing this replacement.
 - All images and icons must have meaningful `alt` or `aria-label` attributes. Decorative images use `alt=""`.
@@ -311,11 +311,11 @@ There are no progressive tiers between card hover and modal — the system eithe
 
 Before shipping any screen, verify:
 
-- [ ] Only LUi brand colors used (`#282743`, `#d9dce3`, `#f7faff`, `#037171`, `#009f93`)
+- [ ] Only LUi brand colors used (`#282743`, `#d9dce3`, `#f7faff`, `#037171`, `#05ccbb`)
 - [ ] Headings and wordmark use **Exo 2**; all other text uses **Montserrat**
 - [ ] Font weights: 400 (regular), 600 (semi-bold), 700 (bold) only
 - [ ] Spacing follows the 8px grid — no arbitrary pixel values
-- [ ] Primary CTA uses `{colors.accent}` (#009f93); hover/active uses `{colors.accent-dark}` (#037171)
+- [ ] Primary CTA uses `{colors.accent}` (#05ccbb); hover/active uses `{colors.accent-dark}` (#037171)
 - [ ] One shadow tier only — card resting, card hover, or modal. No custom shadows
 - [ ] Color contrast meets WCAG AA minimum (4.5:1 for body text)
 - [ ] Focus rings visible with teal ring on all focusable elements
