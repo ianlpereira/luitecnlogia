@@ -14,6 +14,8 @@
   --color-muted-soft:    #9ca3af;
   --color-white:         #ffffff;
   --color-error:         #dc2626;
+  --color-success:       #047857;   /* 5.48:1 on white ✓ AA */
+  --color-warning:       #b45309;   /* 5.02:1 on white ✓ AA */
 
   /* Typography */
   --font-display: 'Exo 2', 'Rajdhani', sans-serif;
@@ -103,12 +105,12 @@ button {
   font-weight: 700;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: var(--color-accent);
+  color: var(--color-accent-dark);   /* #037171 — 5.57:1 on surface, passes AA */
   margin-bottom: var(--space-sm);
 }
 
 .section-tag--light {
-  color: var(--color-accent);
+  color: var(--color-accent);        /* #05ccbb on navy — 7.09:1, passes AAA */
 }
 
 .section-heading {
@@ -172,7 +174,7 @@ button {
 
 .btn-primary {
   background-color: var(--color-accent);
-  color: var(--color-white);
+  color: var(--color-primary);
   border-color: var(--color-accent);
 }
 
@@ -252,8 +254,16 @@ button {
 
 /* The lowercase 'i' in LUi — always teal */
 .accent-i {
-  color: var(--color-accent);
+  color: var(--color-accent-dark);  /* #037171 — default for light backgrounds, 5.57:1 on surface */
   font-style: normal;
+}
+
+/* On dark (navy) backgrounds, restore bright teal for legibility */
+.site-header .accent-i,
+.mobile-nav .accent-i,
+.why .accent-i,
+.site-footer .accent-i {
+  color: var(--color-accent);       /* #05ccbb on navy — 7.09:1, passes AAA */
 }
 
 /* Letter spacing for LUi brand name in running text — matches SVG logo */
@@ -729,7 +739,7 @@ button {
 }
 
 .form-input::placeholder {
-  color: var(--color-muted-soft);
+  color: var(--color-muted);  /* #6b7280 — 4.62:1 on surface, passes AA */
 }
 
 .form-input:focus {

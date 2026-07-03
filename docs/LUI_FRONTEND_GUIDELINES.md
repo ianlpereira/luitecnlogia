@@ -41,8 +41,8 @@ The shape language is **soft but grounded**. Buttons and inputs sit at 6–8px r
 - **On Surface** (`{colors.on-surface}` — #282743): The default text color on `{colors.surface}` — same as Ink, called out separately as a semantic alias for component theming.
 
 ### Semantic
-- **Success** (`{colors.success}` — #059669): Inline success states, confirmation badges, and positive status chips.
-- **Warning** (`{colors.warning}` — #d97706): Warning banners, non-blocking alert text, and attention indicators.
+- **Success** (`{colors.success}` — #047857): Inline success states, confirmation badges, and positive status chips.
+- **Warning** (`{colors.warning}` — #b45309): Warning banners, non-blocking alert text, and attention indicators.
 - **Error** (`{colors.error}` — #dc2626): Inline form validation errors and critical alert text. Distinct from the accent teal — never use teal to communicate error.
 - **Error Hover** (`{colors.error-hover}` — #b91c1c): Darkens on hover for error-linked actions.
 - **Info** (`{colors.info}` — #05ccbb): Informational callouts reuse the accent teal — only appropriate when the callout is non-critical and brand-tone aligned.
@@ -65,8 +65,8 @@ The shape language is **soft but grounded**. Buttons and inputs sit at 6–8px r
   --color-muted:         #6b7280;
   --color-muted-soft:    #9ca3af;
   --color-on-primary:    #ffffff;
-  --color-success:       #059669;
-  --color-warning:       #d97706;
+  --color-success:       #047857;
+  --color-warning:       #b45309;
   --color-error:         #dc2626;
 }
 ```
@@ -158,7 +158,7 @@ There are no progressive tiers between card hover and modal — the system eithe
 
 ### Buttons
 
-**`button-primary`** — Teal fill (`#05ccbb`), white text, 6px radius, `12px 24px` padding, 44px min-height, Montserrat 700 at 14px. The default action in every form, dialog, and primary flow: "Salvar", "Confirmar", "Continuar".
+**`button-primary`** — Teal fill (`#05ccbb`), navy (#282743) text, 6px radius, `12px 24px` padding, 44px min-height, Montserrat 700 at 14px. The default action in every form, dialog, and primary flow: "Salvar", "Confirmar", "Continuar".
 
 **`button-primary-hover`** — Background flips to `{colors.accent-dark}` (#037171). No transform, no shadow change. Transition: `background-color 0.2s ease`.
 
