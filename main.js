@@ -102,6 +102,45 @@ if (!reducedMotion) {
 }
 
 // ============================================================
+// PALETTE SWITCHER
+// Live-swaps CSS custom properties to demo brand customizability
+// ============================================================
+
+const PALETTES = [
+  { primary: '#282743', accent: '#05ccbb', accentDark: '#037171' }, // LUi default
+  { primary: '#1a3326', accent: '#34d399', accentDark: '#047857' }, // Floresta
+  { primary: '#2d1b4e', accent: '#a78bfa', accentDark: '#6d28d9' }, // Crepúsculo
+  { primary: '#3d2200', accent: '#fbbf24', accentDark: '#b45309' }, // Âmbar
+  { primary: '#0d1f3c', accent: '#38bdf8', accentDark: '#0369a1' }, // Oceano
+];
+
+function applyPalette(index) {
+  const p = PALETTES[index];
+  const root = document.documentElement;
+
+  root.style.setProperty('--color-primary', p.primary);
+  root.style.setProperty('--color-ink',     p.primary);
+  root.style.setProperty('--color-accent',      p.accent);
+  root.style.setProperty('--color-accent-dark', p.accentDark);
+
+  // Update inline SVG logo accent tspans
+  document.querySelectorAll('.logo-svg tspan').forEach(el => {
+    el.setAttribute('fill', p.accent);
+  });
+
+  // Update palette button active states
+  document.querySelectorAll('.palette-btn').forEach((btn, i) => {
+    const active = i === index;
+    btn.classList.toggle('palette-btn--active', active);
+    btn.setAttribute('aria-pressed', String(active));
+  });
+}
+
+document.querySelectorAll('.palette-btn').forEach(btn => {
+  btn.addEventListener('click', () => applyPalette(Number(btn.dataset.palette)));
+});
+
+// ============================================================
 // MOBILE NAVIGATION TOGGLE
 // ============================================================
 
