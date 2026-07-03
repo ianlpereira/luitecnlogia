@@ -554,46 +554,6 @@ button {
   margin-bottom: 0;
 }
 
-.about-accent {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-lg);
-}
-
-.about-accent-block {
-  flex: 1;
-  min-height: 120px;
-  border-radius: var(--radius-md);
-  background: linear-gradient(135deg, var(--color-accent) 0%, var(--color-accent-dark) 100%);
-}
-
-.about-stat {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-xs);
-  padding: var(--space-lg);
-  background-color: var(--color-surface);
-  border-radius: var(--radius-md);
-  border: 1px solid var(--color-hairline);
-}
-
-.about-stat-number {
-  font-family: var(--font-display);
-  font-size: 2.5rem;
-  font-weight: 700;
-  color: var(--color-primary);
-  line-height: 1;
-}
-
-.about-stat-label {
-  font-family: var(--font-body);
-  font-size: 0.75rem;
-  font-weight: 600;
-  letter-spacing: 0.05em;
-  text-transform: uppercase;
-  color: var(--color-muted);
-}
-
 /* =============================================================
    SERVICES
    ============================================================= */
@@ -789,11 +749,6 @@ button {
    RESPONSIVE — TABLET (≥ 640px)
    ============================================================= */
 @media (min-width: 640px) {
-  .about-inner {
-    grid-template-columns: 1fr 1fr;
-    align-items: center;
-  }
-
   .services-grid {
     grid-template-columns: repeat(2, 1fr);
   }
@@ -828,11 +783,6 @@ button {
 
   .why-grid {
     grid-template-columns: repeat(3, 1fr);
-  }
-
-  .about-inner {
-    grid-template-columns: 1.5fr 1fr;
-    gap: var(--space-3xl);
   }
 }
 
