@@ -857,6 +857,22 @@ button {
   line-height: 1.5;
 }
 
+.footer-address {
+  font-size: 0.8rem;
+  font-style: normal;
+  color: rgba(255, 255, 255, 0.6);
+  line-height: 1.6;
+}
+
+.footer-address a {
+  color: var(--color-accent);
+  text-decoration: none;
+}
+
+.footer-address a:hover {
+  text-decoration: underline;
+}
+
 /* =============================================================
    RESPONSIVE — TABLET (≥ 640px)
    ============================================================= */

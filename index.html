@@ -3,16 +3,98 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="LUi — Tecnologia construída por pessoas. Somos uma empresa de tecnologia focada em criar soluções digitais com propósito." />
-  <meta property="og:title" content="LUi — Empresa de Tecnologia" />
-  <meta property="og:description" content="Tecnologia construída por pessoas." />
+
+  <!-- Primary SEO -->
+  <title>LUi | Desenvolvimento Web e Mobile — São Luís e São Paulo</title>
+  <meta name="description" content="A LUi é uma empresa de tecnologia que desenvolve aplicações web, aplicativos mobile e oferece consultoria técnica em São Luís (MA) e São Paulo (SP). Tecnologia construída por pessoas." />
+  <meta name="author" content="LUi Tecnologia" />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://lui-tecnologia.com/" />
+
+  <!-- Geo / Local SEO -->
+  <meta name="geo.region" content="BR-MA" />
+  <meta name="geo.placename" content="São Luís, Maranhão; São Paulo, São Paulo" />
+
+  <!-- Theme -->
+  <meta name="theme-color" content="#282743" />
+
+  <!-- Open Graph -->
   <meta property="og:type" content="website" />
-  <title>LUi — Empresa de Tecnologia</title>
+  <meta property="og:site_name" content="LUi Tecnologia" />
+  <meta property="og:locale" content="pt_BR" />
+  <meta property="og:url" content="https://lui-tecnologia.com/" />
+  <meta property="og:title" content="LUi | Desenvolvimento Web e Mobile — São Luís e São Paulo" />
+  <meta property="og:description" content="Empresa de tecnologia especializada em desenvolvimento web, aplicativos mobile e consultoria técnica. Atendemos São Luís (MA) e São Paulo (SP)." />
+  <meta property="og:image" content="https://lui-tecnologia.com/assets/images/og-image.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content="LUi Tecnologia — Desenvolvimento Web e Mobile" />
+
+  <!-- Twitter / X Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="LUi | Desenvolvimento Web e Mobile — São Luís e São Paulo" />
+  <meta name="twitter:description" content="Empresa de tecnologia especializada em desenvolvimento web, aplicativos mobile e consultoria técnica. Atendemos São Luís (MA) e São Paulo (SP)." />
+  <meta name="twitter:image" content="https://lui-tecnologia.com/assets/images/og-image.png" />
+  <meta name="twitter:image:alt" content="LUi Tecnologia — Desenvolvimento Web e Mobile" />
+
+  <!-- Structured Data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": ["Organization", "LocalBusiness"],
+    "name": "LUi Tecnologia",
+    "url": "https://lui-tecnologia.com/",
+    "logo": "https://lui-tecnologia.com/assets/images/logo.svg",
+    "description": "Empresa de tecnologia especializada em desenvolvimento web, aplicativos mobile e consultoria técnica, com atuação em São Luís (MA) e São Paulo (SP).",
+    "areaServed": [
+      {
+        "@type": "City",
+        "name": "São Luís",
+        "containedInPlace": {
+          "@type": "State",
+          "name": "Maranhão",
+          "containedInPlace": { "@type": "Country", "name": "Brasil" }
+        }
+      },
+      {
+        "@type": "City",
+        "name": "São Paulo",
+        "containedInPlace": {
+          "@type": "State",
+          "name": "São Paulo",
+          "containedInPlace": { "@type": "Country", "name": "Brasil" }
+        }
+      }
+    ],
+    "contactPoint": {
+      "@type": "ContactPoint",
+      "contactType": "customer support",
+      "url": "https://lui-tecnologia.com/#contact",
+      "availableLanguage": "Portuguese"
+    },
+    "hasOfferCatalog": {
+      "@type": "OfferCatalog",
+      "name": "Serviços de Tecnologia",
+      "itemListElement": [
+        { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Desenvolvimento Web" } },
+        { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Aplicativos Mobile" } },
+        { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Consultoria Técnica" } }
+      ]
+    }
+  }
+  </script>
+
+  <!-- Icons & Manifest -->
   <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+  <link rel="manifest" href="/manifest.json" />
+
+  <!-- Fonts (preconnect + preload) -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Exo+2:wght@600;700&family=Montserrat:wght@400;600;700&display=swap" />
   <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@600;700&family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="assets/css/style.css" />
 </head>
 <body>
 
@@ -62,7 +144,7 @@
           Tecnologia construída<br />por pessoas.
         </h1>
         <p class="hero-subtext">
-          Transformamos desafios complexos em soluções digitais que impulsionam o crescimento do seu negócio — com inovação, estratégia e propósito.
+          Transformamos desafios complexos em soluções digitais que impulsionam o crescimento do seu negócio — com inovação, estratégia e propósito. Atendemos empresas em <strong>São Luís (MA)</strong> e <strong>São Paulo (SP)</strong>.
         </p>
         <div class="hero-actions">
           <a href="#contact" class="btn btn-primary">Fale conosco</a>
@@ -256,10 +338,13 @@
         <title>LUi</title>
         <text font-family="'Exo 2', sans-serif" font-weight="700" font-size="26" fill="#ffffff" letter-spacing="4" x="1" y="22">LU<tspan fill="#05ccbb">i</tspan></text>
       </svg>
+      <address class="footer-address">
+        São Luís — MA &nbsp;|&nbsp; São Paulo — SP &nbsp;|&nbsp; <a href="mailto:contato@lui-tecnologia.com">contato@lui-tecnologia.com</a>
+      </address>
       <p class="footer-legal">© 2026 <span class="brand-name">LU<span class="accent-i">i</span></span> — Empresa de Tecnologia. Todos os direitos reservados.</p>
     </div>
   </footer>
 
-  <script src="main.js"></script>
+  <script src="assets/js/main.js"></script>
 </body>
 </html>

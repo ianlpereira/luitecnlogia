@@ -1,0 +1,23 @@
+{
+  "name": "LUi Tecnologia",
+  "short_name": "LUi",
+  "description": "Desenvolvimento Web e Mobile em São Luís e São Paulo — Tecnologia construída por pessoas.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#f7faff",
+  "theme_color": "#282743",
+  "lang": "pt-BR",
+  "icons": [
+    {
+      "src": "/apple-touch-icon.png",
+      "sizes": "180x180",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    }
+  ]
+}
