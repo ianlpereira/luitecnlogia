@@ -835,6 +835,67 @@ button {
   align-self: flex-start;
 }
 
+.contact-alternatives {
+  margin-top: var(--space-xl);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-md);
+}
+
+.contact-or {
+  font-size: 0.85rem;
+  color: var(--color-muted);
+  text-align: center;
+}
+
+.contact-channels {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-sm);
+  justify-content: center;
+}
+
+.contact-channel {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  text-decoration: none;
+  border: 1.5px solid var(--color-hairline);
+  color: var(--color-ink);
+  background: var(--color-surface);
+  transition: border-color 0.2s, color 0.2s, background 0.2s;
+}
+
+.contact-channel:hover {
+  border-color: var(--color-accent);
+  color: var(--color-accent-dark);
+}
+
+.contact-channel--whatsapp {
+  color: #128c5e;
+  border-color: #25d366;
+}
+
+.contact-channel--whatsapp:hover {
+  background: #25d366;
+  color: #fff;
+  border-color: #25d366;
+}
+
+.contact-channel--whatsapp svg {
+  color: #25d366;
+  transition: color 0.2s;
+}
+
+.contact-channel--whatsapp:hover svg {
+  color: #fff;
+}
+
 /* =============================================================
    FOOTER
    ============================================================= */
