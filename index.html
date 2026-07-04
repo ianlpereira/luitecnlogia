@@ -515,26 +515,122 @@
   <!-- ===================== FOOTER ===================== -->
   <footer class="site-footer" role="contentinfo">
     <div class="container footer-inner">
-      <svg class="logo-svg logo-svg--sm" viewBox="0 0 80 30" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="LUi">
-        <title>LUi</title>
-        <text font-family="'Exo 2', sans-serif" font-weight="700" font-size="26" fill="#ffffff" letter-spacing="4" x="1" y="22">LU<tspan fill="#05ccbb">i</tspan></text>
-      </svg>
-      <address class="footer-address">
-        São Luís — MA &nbsp;|&nbsp; São Paulo — SP &nbsp;|&nbsp;
-        <a href="mailto:luitecnologia@gmail.com">luitecnologia@gmail.com</a> &nbsp;|&nbsp;
-        <a href="https://wa.me/5598991092411" target="_blank" rel="noopener noreferrer">WhatsApp</a>
-      </address>
-      <p class="footer-legal">© 2026 <span class="brand-name">LU<span class="accent-i">i</span></span> — Empresa de Tecnologia. Todos os direitos reservados.</p>
-      <p class="footer-lgpd">Ao usar este site, você concorda com nossa <a href="#" class="footer-lgpd-link">Política de Privacidade</a>.</p>
+      <div class="footer-brand">
+        <svg class="logo-svg logo-svg--sm" viewBox="0 0 80 30" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="LUi">
+          <title>LUi</title>
+          <text font-family="'Exo 2', sans-serif" font-weight="700" font-size="26" fill="#ffffff" letter-spacing="4" x="1" y="22">LU<tspan fill="#05ccbb">i</tspan></text>
+        </svg>
+        <address class="footer-address">
+          São Luís — MA &nbsp;|&nbsp; São Paulo — SP<br />
+          <a href="mailto:luitecnologia@gmail.com">luitecnologia@gmail.com</a> &nbsp;|&nbsp;
+          <a href="https://wa.me/5598991092411" target="_blank" rel="noopener noreferrer">WhatsApp</a>
+        </address>
+      </div>
+      <div class="footer-meta">
+        <p class="footer-legal">© 2026 <span class="brand-name">LU<span class="accent-i">i</span></span> — Empresa de Tecnologia. Todos os direitos reservados.</p>
+        <p class="footer-lgpd">Ao usar este site, você concorda com nossa <a href="#" class="footer-lgpd-link" id="privacy-trigger">Política de Privacidade</a>.</p>
+      </div>
     </div>
   </footer>
 
-  <!-- Floating WhatsApp -->
-  <a href="https://wa.me/5598991092411" class="whatsapp-float" target="_blank" rel="noopener noreferrer" aria-label="Conversar no WhatsApp">
-    <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z"/>
-    </svg>
-  </a>
+  <!-- ===================== PRIVACY POLICY MODAL ===================== -->
+  <div class="modal-backdrop" id="privacy-modal" role="dialog" aria-modal="true" aria-labelledby="privacy-modal-title" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-header">
+        <h2 class="modal-title" id="privacy-modal-title">Política de Privacidade</h2>
+        <button class="modal-close" id="privacy-modal-close" aria-label="Fechar política de privacidade">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+          </svg>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p class="privacy-updated">Última atualização: 04 de julho de 2026</p>
+
+        <h3>1. Quem somos</h3>
+        <p>A <strong>LUi Tecnologia</strong> ("LUi", "nós", "nosso") é uma empresa de desenvolvimento de software com atuação em São Luís – MA e São Paulo – SP, Brasil. Este site está disponível em <strong>lui-tecnologia.com</strong>.</p>
+        <p>Para os fins da Lei Geral de Proteção de Dados (Lei nº 13.709/2018 — LGPD), a LUi Tecnologia é a <strong>controladora</strong> dos dados pessoais tratados por meio deste site.</p>
+        <p>Contato do encarregado de dados (DPO): <a href="mailto:luitecnologia@gmail.com">luitecnologia@gmail.com</a></p>
+
+        <h3>2. Dados que coletamos</h3>
+        <p>Coletamos apenas os dados necessários para operar nossos serviços:</p>
+        <ul>
+          <li><strong>Formulário de contato:</strong> nome completo, endereço de e-mail e mensagem fornecidos voluntariamente.</li>
+          <li><strong>Dados de navegação:</strong> endereço IP, tipo de navegador, páginas visitadas e data/hora de acesso, coletados de forma agregada e anônima por ferramentas de análise.</li>
+          <li><strong>Cookies técnicos:</strong> necessários para o funcionamento correto do site (preferências de sessão). Não utilizamos cookies de rastreamento de terceiros para fins publicitários.</li>
+        </ul>
+        <p>Não coletamos dados sensíveis (saúde, religião, biometria, etc.) e não solicitamos documentos de identificação neste site.</p>
+
+        <h3>3. Como usamos seus dados</h3>
+        <ul>
+          <li>Responder à sua mensagem e iniciar uma conversa sobre seu projeto.</li>
+          <li>Enviar informações relacionadas ao serviço solicitado.</li>
+          <li>Melhorar a performance e a usabilidade do site com base em dados agregados de navegação.</li>
+          <li>Cumprir obrigações legais e regulatórias.</li>
+        </ul>
+        <p>Não utilizamos seus dados para envio de marketing sem consentimento prévio e expresso.</p>
+
+        <h3>4. Base legal para o tratamento (LGPD)</h3>
+        <ul>
+          <li><strong>Consentimento (Art. 7º, I):</strong> ao preencher e enviar o formulário de contato, você consente com o tratamento dos dados informados.</li>
+          <li><strong>Legítimo interesse (Art. 7º, IX):</strong> análise agregada de navegação para melhoria do site, de forma que não viola seus direitos e liberdades fundamentais.</li>
+          <li><strong>Obrigação legal (Art. 7º, II):</strong> quando o tratamento for exigido por lei ou por autoridade competente.</li>
+        </ul>
+
+        <h3>5. Compartilhamento de dados</h3>
+        <p>Não vendemos, alugamos ou cedemos seus dados a terceiros. Podemos compartilhá-los apenas nas seguintes situações:</p>
+        <ul>
+          <li><strong>Prestadores de serviço:</strong> ferramentas de e-mail e análise que nos auxiliam na operação do site, sempre sob acordo de confidencialidade e conforme a LGPD.</li>
+          <li><strong>Exigência legal:</strong> quando obrigados por lei, ordem judicial ou autoridade reguladora.</li>
+        </ul>
+        <p>Todo compartilhamento ocorre com as salvaguardas adequadas e limitado à finalidade declarada.</p>
+
+        <h3>6. Retenção de dados</h3>
+        <p>Mantemos seus dados pelo tempo necessário para atender à finalidade de coleta ou para cumprir obrigações legais:</p>
+        <ul>
+          <li>Mensagens de contato: até 2 anos após o último contato ou enquanto houver relação comercial ativa.</li>
+          <li>Dados de navegação agregados: até 26 meses, conforme padrão das ferramentas de análise.</li>
+        </ul>
+        <p>Após o prazo, os dados são eliminados de forma segura.</p>
+
+        <h3>7. Seus direitos como titular</h3>
+        <p>Nos termos da LGPD (Art. 18), você tem direito a:</p>
+        <ul>
+          <li>Confirmar a existência de tratamento dos seus dados.</li>
+          <li>Acessar os dados que mantemos sobre você.</li>
+          <li>Corrigir dados incompletos, inexatos ou desatualizados.</li>
+          <li>Solicitar a anonimização, bloqueio ou eliminação de dados desnecessários.</li>
+          <li>Solicitar a portabilidade dos seus dados.</li>
+          <li>Revogar o consentimento a qualquer momento, sem prejuízo à legalidade do tratamento anterior.</li>
+          <li>Apresentar reclamação à Autoridade Nacional de Proteção de Dados (ANPD).</li>
+        </ul>
+        <p>Para exercer qualquer desses direitos, entre em contato pelo e-mail <a href="mailto:luitecnologia@gmail.com">luitecnologia@gmail.com</a>. Responderemos no prazo legal de até 15 dias.</p>
+
+        <h3>8. Segurança</h3>
+        <p>Adotamos medidas técnicas e organizacionais adequadas para proteger seus dados contra acesso não autorizado, alteração, divulgação ou destruição. Nosso site utiliza HTTPS (TLS) para criptografar toda comunicação entre seu navegador e nossos servidores.</p>
+        <p>Em caso de incidente de segurança que possa acarretar risco ou dano relevante, notificaremos a ANPD e os titulares afetados conforme exigido pela LGPD.</p>
+
+        <h3>9. Cookies</h3>
+        <p>Este site pode utilizar cookies técnicos essenciais para seu funcionamento. Não utilizamos cookies de rastreamento para fins publicitários de terceiros. Você pode configurar seu navegador para recusar cookies, mas isso pode afetar a experiência de navegação.</p>
+
+        <h3>10. Transferência internacional</h3>
+        <p>Caso algum dado seja processado em servidores fora do Brasil (por exemplo, por ferramentas de análise), isso ocorrerá apenas com destinos que ofereçam nível adequado de proteção ou mediante garantias contratuais conforme a LGPD.</p>
+
+        <h3>11. Alterações nesta política</h3>
+        <p>Podemos atualizar esta Política de Privacidade periodicamente. A versão mais recente estará sempre disponível nesta página, com a data de última atualização indicada no topo. Recomendamos que você a consulte regularmente.</p>
+
+        <h3>12. Contato</h3>
+        <p>Dúvidas, solicitações ou reclamações relacionadas à privacidade podem ser enviadas para:</p>
+        <p><strong>LUi Tecnologia</strong><br />
+        São Luís – MA | São Paulo – SP, Brasil<br />
+        E-mail: <a href="mailto:luitecnologia@gmail.com">luitecnologia@gmail.com</a><br />
+        WhatsApp: <a href="https://wa.me/5598991092411" target="_blank" rel="noopener noreferrer">+55 (98) 99109-2411</a></p>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-primary modal-close-btn" id="privacy-modal-close-btn">Entendi</button>
+      </div>
+    </div>
+  </div>
 
   <!-- Scroll to top -->
   <button class="scroll-top" id="scroll-top" aria-label="Voltar ao topo" hidden>

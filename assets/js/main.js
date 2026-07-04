@@ -238,3 +238,58 @@ window.addEventListener('scroll', () => {
 scrollTopBtn.addEventListener('click', () => {
   window.scrollTo({ top: 0, behavior: 'smooth' });
 });
+
+// ============================================================
+// PRIVACY POLICY MODAL
+// ============================================================
+
+const privacyModal    = document.getElementById('privacy-modal');
+const privacyTrigger  = document.getElementById('privacy-trigger');
+const privacyClose    = document.getElementById('privacy-modal-close');
+const privacyCloseBtn = document.getElementById('privacy-modal-close-btn');
+
+function openPrivacyModal() {
+  privacyModal.classList.add('modal-open');
+  privacyModal.setAttribute('aria-hidden', 'false');
+  document.body.style.overflow = 'hidden';
+  privacyClose.focus();
+}
+
+function closePrivacyModal() {
+  privacyModal.classList.remove('modal-open');
+  privacyModal.setAttribute('aria-hidden', 'true');
+  document.body.style.overflow = '';
+  privacyTrigger.focus();
+}
+
+privacyTrigger.addEventListener('click', (e) => {
+  e.preventDefault();
+  openPrivacyModal();
+});
+
+privacyClose.addEventListener('click', closePrivacyModal);
+privacyCloseBtn.addEventListener('click', closePrivacyModal);
+
+// Close on backdrop click
+privacyModal.addEventListener('click', (e) => {
+  if (e.target === privacyModal) closePrivacyModal();
+});
+
+// Keyboard: Escape + focus trap
+privacyModal.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape') { closePrivacyModal(); return; }
+
+  if (e.key === 'Tab') {
+    const focusable = Array.from(
+      privacyModal.querySelectorAll('a, button, [tabindex="0"]')
+    ).filter(el => !el.closest('[aria-hidden="true"]'));
+    const first = focusable[0];
+    const last  = focusable[focusable.length - 1];
+
+    if (e.shiftKey && document.activeElement === first) {
+      e.preventDefault(); last.focus();
+    } else if (!e.shiftKey && document.activeElement === last) {
+      e.preventDefault(); first.focus();
+    }
+  }
+});
