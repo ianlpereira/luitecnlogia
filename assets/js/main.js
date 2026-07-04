@@ -151,6 +151,7 @@ const mobileNavLinks = document.querySelectorAll('.mobile-nav-link');
 function openNav() {
   document.body.classList.add('nav-open');
   hamburger.setAttribute('aria-expanded', 'true');
+  hamburger.setAttribute('aria-label', 'Fechar menu');
   mobileNav.setAttribute('aria-hidden', 'false');
   mobileNav.querySelector('a').focus();
 }
@@ -158,6 +159,7 @@ function openNav() {
 function closeNav() {
   document.body.classList.remove('nav-open');
   hamburger.setAttribute('aria-expanded', 'false');
+  hamburger.setAttribute('aria-label', 'Abrir menu');
   mobileNav.setAttribute('aria-hidden', 'true');
   hamburger.focus();
 }
@@ -169,5 +171,70 @@ hamburger.addEventListener('click', () => {
 mobileNavLinks.forEach((link) => link.addEventListener('click', closeNav));
 
 document.addEventListener('keydown', (e) => {
-  if (e.key === 'Escape' && document.body.classList.contains('nav-open')) closeNav();
+  if (e.key === 'Escape' && document.body.classList.contains('nav-open')) {
+    closeNav();
+    return;
+  }
+
+  // Focus trap inside mobile nav
+  if (e.key === 'Tab' && document.body.classList.contains('nav-open')) {
+    const focusable = Array.from(mobileNav.querySelectorAll('a, button, [tabindex="0"]'));
+    const first = focusable[0];
+    const last = focusable[focusable.length - 1];
+
+    if (e.shiftKey) {
+      if (document.activeElement === first) {
+        e.preventDefault();
+        last.focus();
+      }
+    } else {
+      if (document.activeElement === last) {
+        e.preventDefault();
+        first.focus();
+      }
+    }
+  }
+});
+
+// ============================================================
+// FAQ ACCORDION
+// ============================================================
+
+document.querySelectorAll('.faq-question').forEach((btn) => {
+  btn.addEventListener('click', () => {
+    const expanded = btn.getAttribute('aria-expanded') === 'true';
+
+    // Collapse all items
+    document.querySelectorAll('.faq-question').forEach((other) => {
+      other.setAttribute('aria-expanded', 'false');
+      const ans = document.getElementById(other.getAttribute('aria-controls'));
+      if (ans) ans.setAttribute('hidden', '');
+    });
+
+    // If it wasn't open, open it now
+    if (!expanded) {
+      btn.setAttribute('aria-expanded', 'true');
+      const answer = document.getElementById(btn.getAttribute('aria-controls'));
+      if (answer) answer.removeAttribute('hidden');
+    }
+  });
+});
+
+// ============================================================
+// SCROLL TO TOP
+// ============================================================
+
+const scrollTopBtn = document.getElementById('scroll-top');
+
+window.addEventListener('scroll', () => {
+  if (window.scrollY > 400) {
+    scrollTopBtn.hidden = false;
+    scrollTopBtn.classList.add('visible');
+  } else {
+    scrollTopBtn.classList.remove('visible');
+  }
+}, { passive: true });
+
+scrollTopBtn.addEventListener('click', () => {
+  window.scrollTo({ top: 0, behavior: 'smooth' });
 });
