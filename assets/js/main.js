@@ -124,7 +124,7 @@ function applyPalette(index) {
   root.style.setProperty('--color-accent-dark', p.accentDark);
 
   // Update inline SVG logo accent tspans
-  document.querySelectorAll('.logo-svg tspan').forEach(el => {
+  document.querySelectorAll('.logo-svg tspan, .hero-logo-svg tspan').forEach(el => {
     el.setAttribute('fill', p.accent);
   });
 
@@ -219,6 +219,61 @@ document.querySelectorAll('.faq-question').forEach((btn) => {
     }
   });
 });
+
+// ============================================================
+// HERO LOGO → HEADER LOGO SCROLL TRANSITION
+// Cross-fades the large hero logo out and the sticky header
+// logo in as the user scrolls down past the hero.
+// ============================================================
+
+const heroLogoEl   = document.querySelector('.hero-logo');
+const headerLogoEl = document.querySelector('.site-logo');
+
+if (heroLogoEl && headerLogoEl) {
+  const headerHeight = parseInt(
+    getComputedStyle(document.documentElement).getPropertyValue('--header-height')
+  ) || 68;
+
+  // Fade begins when hero logo bottom is (headerHeight + 120)px from top,
+  // and completes when it reaches the header's bottom edge.
+  const FADE_START = headerHeight + 120;
+  const FADE_END   = headerHeight;
+
+  let rafQueued = false;
+
+  function syncLogoOpacity() {
+    const bottom = heroLogoEl.getBoundingClientRect().bottom;
+
+    let t; // 0 = hero logo fully visible, 1 = header logo fully visible
+    if (bottom >= FADE_START) {
+      t = 0;
+    } else if (bottom <= FADE_END) {
+      t = 1;
+    } else {
+      t = (FADE_START - bottom) / (FADE_START - FADE_END);
+    }
+
+    // Respect reduced-motion: snap instead of interpolate
+    if (reducedMotion) t = t >= 0.5 ? 1 : 0;
+
+    heroLogoEl.style.opacity         = 1 - t;
+    headerLogoEl.style.opacity       = t;
+    heroLogoEl.style.pointerEvents   = t > 0.9 ? 'none' : '';
+    headerLogoEl.style.pointerEvents = t < 0.1 ? 'none' : '';
+
+    rafQueued = false;
+  }
+
+  window.addEventListener('scroll', () => {
+    if (!rafQueued) {
+      rafQueued = true;
+      requestAnimationFrame(syncLogoOpacity);
+    }
+  }, { passive: true });
+
+  // Resolve correct state immediately (handles deep-links / mid-scroll refresh)
+  syncLogoOpacity();
+}
 
 // ============================================================
 // SCROLL TO TOP
