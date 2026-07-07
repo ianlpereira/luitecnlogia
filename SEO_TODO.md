@@ -133,9 +133,10 @@ Inclua exemplos concretos ou números nas descrições dos diferenciais.
 
 ## 📋 Resumo de Progresso
 
-- [ ] #1 — Google Search Console configurado e sitemap enviado
+- [x] #1 — Google Search Console configurado e sitemap enviado ✅
 - [ ] #2 — Google Business Profile criado e verificado (São Luís)
 - [ ] #2b — Google Business Profile criado e verificado (São Paulo)
-- [ ] #3 — PageSpeed Mobile Score ≥ 90
+- [x] #3 — PageSpeed Mobile Score ≥ 90 (91 mobile, 99 desktop) ✅
+- [x] #3b — Fontes auto-hospedadas para reduzir FCP/LCP abaixo de 2,5s ✅
 - [ ] #4 — Conteúdo das seções Sobre, Serviços e Por que LUi expandido
 - [ ] #5 — LinkedIn, Clutch e demais diretórios cadastrados
