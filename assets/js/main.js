@@ -1,110 +1,111 @@
 // ============================================================
-// BLOB ANIMATOR
-// Generates organic morphing SVG blobs using Catmull-Rom
-// splines converted to cubic Bezier curves.
+// LUi Tecnologia — site behaviour
+// Single flat script, no imports/exports, no build step.
+// Loaded at the end of <body>, so the DOM is already parsed.
 // ============================================================
 
-class BlobAnimator {
-  constructor(pathEl, opts = {}) {
-    this.path    = pathEl;
-    this.cx      = opts.cx       ?? 100;
-    this.cy      = opts.cy       ?? 100;
-    this.radius  = opts.radius   ?? 75;
-    this.points  = opts.points   ?? 6;
-    this.speed   = opts.speed    ?? 0.0005;
-    this.variance = opts.variance ?? 0.28;
-    // Random per-point phase offsets so blobs don't pulse in sync
-    this.seeds = Array.from({ length: this.points }, () => Math.random() * Math.PI * 2);
-    this.rafId = null;
-    this._tick = this._tick.bind(this);
-  }
-
-  // Compute one point's displaced radius at time t
-  _pointAt(i, t) {
-    const angle = ((Math.PI * 2) / this.points) * i - Math.PI / 2;
-    const r = this.radius * (1 + Math.sin(t + this.seeds[i]) * this.variance);
-    return [
-      this.cx + Math.cos(angle) * r,
-      this.cy + Math.sin(angle) * r,
-    ];
-  }
-
-  // Catmull-Rom → cubic Bezier conversion for a closed polyline
-  _buildPath(t) {
-    const n = this.points;
-    const pts = Array.from({ length: n }, (_, i) => this._pointAt(i, t));
-
-    let d = `M${fmt(pts[0][0])},${fmt(pts[0][1])}`;
-    for (let i = 0; i < n; i++) {
-      const p0 = pts[(i - 1 + n) % n];
-      const p1 = pts[i];
-      const p2 = pts[(i + 1) % n];
-      const p3 = pts[(i + 2) % n];
-      // Control points
-      const cp1x = p1[0] + (p2[0] - p0[0]) / 6;
-      const cp1y = p1[1] + (p2[1] - p0[1]) / 6;
-      const cp2x = p2[0] - (p3[0] - p1[0]) / 6;
-      const cp2y = p2[1] - (p3[1] - p1[1]) / 6;
-      d += ` C${fmt(cp1x)},${fmt(cp1y)} ${fmt(cp2x)},${fmt(cp2y)} ${fmt(p2[0])},${fmt(p2[1])}`;
-    }
-    return d + 'Z';
-  }
-
-  _tick(ts) {
-    this.path.setAttribute('d', this._buildPath(ts * this.speed));
-    this.rafId = requestAnimationFrame(this._tick);
-  }
-
-  start() {
-    this.rafId = requestAnimationFrame(this._tick);
-    return this;
-  }
-
-  stop() {
-    if (this.rafId) cancelAnimationFrame(this.rafId);
-  }
-}
-
-// Round floats to 2 decimal places for shorter SVG strings
-function fmt(n) {
-  return Math.round(n * 100) / 100;
-}
-
-// ============================================================
-// BLOB INITIALIZATION
-// ============================================================
-
-// Each config matches a .js-blob path in DOM order
-const BLOB_CONFIGS = [
-  // Hero — main (large, slow, gentle)
-  { points: 7, radius: 78, cx: 100, cy: 100, speed: 0.00035, variance: 0.22 },
-  // Hero — secondary (smaller, faster, more organic)
-  { points: 6, radius: 74, cx: 100, cy: 100, speed: 0.00055, variance: 0.32 },
-  // About
-  { points: 8, radius: 76, cx: 100, cy: 100, speed: 0.00028, variance: 0.18 },
-  // Services
-  { points: 6, radius: 75, cx: 100, cy: 100, speed: 0.00042, variance: 0.26 },
-  // Why — main
-  { points: 7, radius: 77, cx: 100, cy: 100, speed: 0.00031, variance: 0.24 },
-  // Why — secondary
-  { points: 5, radius: 73, cx: 100, cy: 100, speed: 0.00048, variance: 0.30 },
-  // Contact
-  { points: 6, radius: 75, cx: 100, cy: 100, speed: 0.00038, variance: 0.20 },
-];
-
+const root = document.documentElement;
 const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-if (!reducedMotion) {
-  document.querySelectorAll('.js-blob').forEach((pathEl, i) => {
-    const cfg = BLOB_CONFIGS[i] ?? BLOB_CONFIGS[0];
-    new BlobAnimator(pathEl, cfg).start();
+// ============================================================
+// THEME CONTROLLER
+// Resolution order: explicit user choice → OS preference.
+// The initial attribute is stamped by the inline script in <head>
+// so there is no flash of the wrong theme before this runs.
+// ============================================================
+
+const THEME_KEY = 'lui-theme';
+const themeToggle = document.getElementById('theme-toggle');
+const themeMeta = document.querySelector('meta[name="theme-color"]');
+const osDark = window.matchMedia('(prefers-color-scheme: dark)');
+
+function resolvedTheme() {
+  const explicit = root.getAttribute('data-theme');
+  if (explicit === 'dark' || explicit === 'light') return explicit;
+  return osDark.matches ? 'dark' : 'light';
+}
+
+// Keep the browser chrome colour in step with the painted page.
+// The surface tokens are color-mix() values, which browsers serialize as
+// `oklab(...)`. A theme-color meta needs a plain sRGB colour, and reading
+// back canvas.fillStyle does not normalise it (the colour space is
+// preserved), so paint one pixel and read the actual bytes.
+let pixelCtx = null;
+
+function toRgb(color) {
+  if (!color) return null;
+  if (/^#[0-9a-f]{3,8}$/i.test(color) || /^rgba?\(/i.test(color)) return color;
+
+  try {
+    if (!pixelCtx) {
+      const c = document.createElement('canvas');
+      c.width = c.height = 1;
+      pixelCtx = c.getContext('2d', { willReadFrequently: true });
+    }
+    if (!pixelCtx) return null;
+
+    pixelCtx.clearRect(0, 0, 1, 1);
+    pixelCtx.fillStyle = '#000';
+    pixelCtx.fillStyle = color;
+    pixelCtx.fillRect(0, 0, 1, 1);
+
+    const [r, g, b] = pixelCtx.getImageData(0, 0, 1, 1).data;
+    return `rgb(${r}, ${g}, ${b})`;
+  } catch (e) {
+    return null; // canvas blocked (rare privacy settings) — keep the existing meta
+  }
+}
+
+function syncThemeMeta() {
+  if (!themeMeta) return;
+  const painted = toRgb(getComputedStyle(document.body).backgroundColor);
+  if (painted) themeMeta.setAttribute('content', painted);
+}
+
+function syncThemeToggle() {
+  if (!themeToggle) return;
+  const isDark = resolvedTheme() === 'dark';
+  themeToggle.setAttribute('aria-pressed', String(isDark));
+  themeToggle.setAttribute('aria-label', isDark ? 'Usar tema claro' : 'Usar tema escuro');
+}
+
+function applyTheme(theme) {
+  root.setAttribute('data-theme', theme);
+  try {
+    localStorage.setItem(THEME_KEY, theme);
+  } catch (e) {
+    /* storage unavailable (private mode, blocked cookies) — theme still applies for this visit */
+  }
+  syncThemeToggle();
+  syncThemeMeta();
+}
+
+if (themeToggle) {
+  themeToggle.addEventListener('click', () => {
+    applyTheme(resolvedTheme() === 'dark' ? 'light' : 'dark');
   });
 }
 
+// Follow the OS while the visitor has not made an explicit choice
+osDark.addEventListener('change', () => {
+  if (!root.hasAttribute('data-theme')) {
+    syncThemeToggle();
+    syncThemeMeta();
+  }
+});
+
+syncThemeToggle();
+syncThemeMeta();
+
 // ============================================================
 // PALETTE SWITCHER
-// Live-swaps CSS custom properties to demo brand customizability
+// Live-swaps the brand primitives to demo customizability.
+// Writes a `data-palette` attribute rather than inline custom
+// properties — inline styles on <html> would out-specify the
+// dark-theme media query and silently break it.
 // ============================================================
+
+const PALETTE_KEY = 'lui-palette';
 
 const PALETTES = [
   { primary: '#282743', accent: '#05ccbb', accentDark: '#037171' }, // LUi default
@@ -114,31 +115,51 @@ const PALETTES = [
   { primary: '#0d1f3c', accent: '#38bdf8', accentDark: '#0369a1' }, // Oceano
 ];
 
-function applyPalette(index) {
-  const p = PALETTES[index];
-  const root = document.documentElement;
+const paletteBtns = document.querySelectorAll('.palette-btn');
+let themingTimer = null;
 
-  root.style.setProperty('--color-primary', p.primary);
-  root.style.setProperty('--color-ink',     p.primary);
-  root.style.setProperty('--color-accent',      p.accent);
-  root.style.setProperty('--color-accent-dark', p.accentDark);
+function applyPalette(index, persist = true) {
+  const i = Number.isInteger(index) && PALETTES[index] ? index : 0;
+  const p = PALETTES[i];
 
-  // Update inline SVG logo accent tspans
-  document.querySelectorAll('.logo-svg tspan, .hero-logo-svg tspan').forEach(el => {
+  root.setAttribute('data-palette', String(i));
+
+  // Smooth the brand-driven surfaces only while the swap is in flight
+  root.classList.add('is-theming');
+  clearTimeout(themingTimer);
+  themingTimer = setTimeout(() => root.classList.remove('is-theming'), 400);
+
+  // The inline SVG wordmarks carry a literal accent fill
+  document.querySelectorAll('.logo-svg tspan, .hero-logo-svg tspan').forEach((el) => {
     el.setAttribute('fill', p.accent);
   });
 
-  // Update palette button active states
-  document.querySelectorAll('.palette-btn').forEach((btn, i) => {
-    const active = i === index;
+  paletteBtns.forEach((btn, n) => {
+    const active = n === i;
     btn.classList.toggle('palette-btn--active', active);
     btn.setAttribute('aria-pressed', String(active));
   });
+
+  if (persist) {
+    try {
+      localStorage.setItem(PALETTE_KEY, String(i));
+    } catch (e) {
+      /* storage unavailable — palette still applies for this visit */
+    }
+  }
+
+  syncThemeMeta();
 }
 
-document.querySelectorAll('.palette-btn').forEach(btn => {
+paletteBtns.forEach((btn) => {
   btn.addEventListener('click', () => applyPalette(Number(btn.dataset.palette)));
 });
+
+// Re-sync the logo fills and button states with whatever the head
+// script restored from storage.
+if (paletteBtns.length) {
+  applyPalette(Number(root.getAttribute('data-palette')) || 0, false);
+}
 
 // ============================================================
 // MOBILE NAVIGATION TOGGLE
@@ -153,7 +174,8 @@ function openNav() {
   hamburger.setAttribute('aria-expanded', 'true');
   hamburger.setAttribute('aria-label', 'Fechar menu');
   mobileNav.setAttribute('aria-hidden', 'false');
-  mobileNav.querySelector('a').focus();
+  const first = mobileNav.querySelector('a');
+  if (first) first.focus();
 }
 
 function closeNav() {
@@ -164,40 +186,45 @@ function closeNav() {
   hamburger.focus();
 }
 
-hamburger.addEventListener('click', () => {
-  document.body.classList.contains('nav-open') ? closeNav() : openNav();
-});
+if (hamburger && mobileNav) {
+  hamburger.addEventListener('click', () => {
+    document.body.classList.contains('nav-open') ? closeNav() : openNav();
+  });
 
-mobileNavLinks.forEach((link) => link.addEventListener('click', closeNav));
+  mobileNavLinks.forEach((link) => link.addEventListener('click', closeNav));
 
-document.addEventListener('keydown', (e) => {
-  if (e.key === 'Escape' && document.body.classList.contains('nav-open')) {
-    closeNav();
-    return;
-  }
+  document.addEventListener('keydown', (e) => {
+    if (!document.body.classList.contains('nav-open')) return;
 
-  // Focus trap inside mobile nav
-  if (e.key === 'Tab' && document.body.classList.contains('nav-open')) {
-    const focusable = Array.from(mobileNav.querySelectorAll('a, button, [tabindex="0"]'));
-    const first = focusable[0];
-    const last = focusable[focusable.length - 1];
+    if (e.key === 'Escape') {
+      closeNav();
+      return;
+    }
 
-    if (e.shiftKey) {
-      if (document.activeElement === first) {
-        e.preventDefault();
-        last.focus();
-      }
-    } else {
-      if (document.activeElement === last) {
+    // Focus trap inside mobile nav
+    if (e.key === 'Tab') {
+      const focusable = Array.from(mobileNav.querySelectorAll('a, button, [tabindex="0"]'));
+      if (!focusable.length) return;
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+
+      if (e.shiftKey) {
+        if (document.activeElement === first) {
+          e.preventDefault();
+          last.focus();
+        }
+      } else if (document.activeElement === last) {
         e.preventDefault();
         first.focus();
       }
     }
-  }
-});
+  });
+}
 
 // ============================================================
 // FAQ ACCORDION
+// Collapse-all-then-open. The `hidden` attribute stays the source
+// of truth; CSS animates around it.
 // ============================================================
 
 document.querySelectorAll('.faq-question').forEach((btn) => {
@@ -221,130 +248,348 @@ document.querySelectorAll('.faq-question').forEach((btn) => {
 });
 
 // ============================================================
-// HERO LOGO → HEADER LOGO SCROLL TRANSITION
-// Cross-fades the large hero logo out and the sticky header
-// logo in as the user scrolls down past the hero.
+// SCROLL REVEAL
 // ============================================================
 
-const heroLogoEl   = document.querySelector('.hero-logo');
-const headerLogoEl = document.querySelector('.site-logo');
+const revealEls = document.querySelectorAll('.reveal');
 
-if (heroLogoEl && headerLogoEl) {
-  const headerHeight = parseInt(
-    getComputedStyle(document.documentElement).getPropertyValue('--header-height')
-  ) || 68;
+if (revealEls.length) {
+  if (reducedMotion || !('IntersectionObserver' in window)) {
+    revealEls.forEach((el) => el.classList.add('is-visible'));
+  } else {
+    const revealObserver = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return;
+          entry.target.classList.add('is-visible');
+          revealObserver.unobserve(entry.target);
+        });
+      },
+      { rootMargin: '0px 0px -12% 0px', threshold: 0.08 }
+    );
 
-  // Fade begins when hero logo bottom is (headerHeight + 120)px from top,
-  // and completes when it reaches the header's bottom edge.
-  const FADE_START = headerHeight + 120;
-  const FADE_END   = headerHeight;
-
-  let rafQueued = false;
-
-  function syncLogoOpacity() {
-    const bottom = heroLogoEl.getBoundingClientRect().bottom;
-
-    let t; // 0 = hero logo fully visible, 1 = header logo fully visible
-    if (bottom >= FADE_START) {
-      t = 0;
-    } else if (bottom <= FADE_END) {
-      t = 1;
-    } else {
-      t = (FADE_START - bottom) / (FADE_START - FADE_END);
-    }
-
-    // Respect reduced-motion: snap instead of interpolate
-    if (reducedMotion) t = t >= 0.5 ? 1 : 0;
-
-    heroLogoEl.style.opacity         = 1 - t;
-    headerLogoEl.style.opacity       = t;
-    heroLogoEl.style.pointerEvents   = t > 0.9 ? 'none' : '';
-    headerLogoEl.style.pointerEvents = t < 0.1 ? 'none' : '';
-
-    rafQueued = false;
+    revealEls.forEach((el) => revealObserver.observe(el));
   }
-
-  window.addEventListener('scroll', () => {
-    if (!rafQueued) {
-      rafQueued = true;
-      requestAnimationFrame(syncLogoOpacity);
-    }
-  }, { passive: true });
-
-  // Resolve correct state immediately (handles deep-links / mid-scroll refresh)
-  syncLogoOpacity();
 }
 
 // ============================================================
-// SCROLL TO TOP
+// ACTIVE SECTION → NAV INDICATOR
 // ============================================================
 
-const scrollTopBtn = document.getElementById('scroll-top');
+const navLinks = Array.from(document.querySelectorAll('.nav-link, .mobile-nav-link'));
+const linksByHash = new Map();
 
-window.addEventListener('scroll', () => {
-  if (window.scrollY > 400) {
-    scrollTopBtn.hidden = false;
-    scrollTopBtn.classList.add('visible');
-  } else {
-    scrollTopBtn.classList.remove('visible');
-  }
-}, { passive: true });
-
-scrollTopBtn.addEventListener('click', () => {
-  window.scrollTo({ top: 0, behavior: 'smooth' });
+navLinks.forEach((link) => {
+  const hash = link.getAttribute('href');
+  if (!hash || !hash.startsWith('#')) return;
+  if (!linksByHash.has(hash)) linksByHash.set(hash, []);
+  linksByHash.get(hash).push(link);
 });
+
+function setActiveSection(id) {
+  navLinks.forEach((link) => link.removeAttribute('aria-current'));
+  const active = linksByHash.get('#' + id);
+  if (active) active.forEach((link) => link.setAttribute('aria-current', 'true'));
+}
+
+if ('IntersectionObserver' in window && linksByHash.size) {
+  const headerHeight =
+    parseInt(getComputedStyle(root).getPropertyValue('--header-height'), 10) || 68;
+
+  const watched = Array.from(linksByHash.keys())
+    .map((hash) => document.querySelector(hash))
+    .filter(Boolean);
+
+  const visible = new Set();
+
+  const sectionObserver = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) visible.add(entry.target);
+        else visible.delete(entry.target);
+      });
+
+      if (!visible.size) return;
+
+      // The topmost section still under the header wins
+      const current = Array.from(visible).sort(
+        (a, b) => a.getBoundingClientRect().top - b.getBoundingClientRect().top
+      )[0];
+
+      if (current && current.id) setActiveSection(current.id);
+    },
+    { rootMargin: `-${headerHeight + 8}px 0px -55% 0px`, threshold: 0 }
+  );
+
+  watched.forEach((section) => sectionObserver.observe(section));
+}
+
+// ============================================================
+// CARD SPOTLIGHT
+// One delegated listener; skipped on coarse pointers.
+// ============================================================
+
+if (window.matchMedia('(hover: hover) and (pointer: fine)').matches && !reducedMotion) {
+  document.addEventListener(
+    'pointermove',
+    (e) => {
+      const card = e.target.closest('.service-card');
+      if (!card) return;
+      const rect = card.getBoundingClientRect();
+      card.style.setProperty('--spot-x', `${e.clientX - rect.left}px`);
+      card.style.setProperty('--spot-y', `${e.clientY - rect.top}px`);
+    },
+    { passive: true }
+  );
+}
+
+// ============================================================
+// CONTACT FORM
+// No backend: valid submissions compose a mailto: draft.
+// ============================================================
+
+const contactForm = document.getElementById('contact-form');
+
+if (contactForm) {
+  const formStatus = document.getElementById('form-status');
+  const fields = [
+    { el: document.getElementById('name'), error: document.getElementById('name-error') },
+    { el: document.getElementById('email'), error: document.getElementById('email-error') },
+    { el: document.getElementById('message'), error: document.getElementById('message-error') },
+  ].filter((f) => f.el && f.error);
+
+  const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+
+  function validateField(field) {
+    const value = field.el.value.trim();
+    let message = '';
+
+    if (!value) {
+      message = 'Este campo é obrigatório.';
+    } else if (field.el.type === 'email' && !EMAIL_RE.test(value)) {
+      message = 'Informe um e-mail válido.';
+    } else if (field.el.id === 'message' && value.length < 10) {
+      message = 'Conte um pouco mais — pelo menos 10 caracteres.';
+    }
+
+    field.error.textContent = message;
+    field.el.setAttribute('aria-invalid', message ? 'true' : 'false');
+    return !message;
+  }
+
+  fields.forEach((field) => {
+    // Only nag after the visitor has already left the field once
+    field.el.addEventListener('blur', () => validateField(field));
+    field.el.addEventListener('input', () => {
+      if (field.el.getAttribute('aria-invalid') === 'true') validateField(field);
+    });
+  });
+
+  contactForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    if (formStatus) formStatus.textContent = '';
+
+    const results = fields.map(validateField);
+    const firstInvalid = fields[results.indexOf(false)];
+
+    if (firstInvalid) {
+      firstInvalid.el.focus();
+      return;
+    }
+
+    const name = document.getElementById('name').value.trim();
+    const email = document.getElementById('email').value.trim();
+    const message = document.getElementById('message').value.trim();
+
+    const subject = `Contato pelo site — ${name}`;
+    const body = `Nome: ${name}\nE-mail: ${email}\n\n${message}`;
+
+    window.location.href =
+      `mailto:luitecnologia@gmail.com?subject=${encodeURIComponent(subject)}` +
+      `&body=${encodeURIComponent(body)}`;
+
+    if (formStatus) {
+      formStatus.textContent =
+        'Abrimos seu aplicativo de e-mail com a mensagem pronta. Se nada acontecer, escreva para luitecnologia@gmail.com.';
+    }
+  });
+}
+
+// ============================================================
+// UNIFIED SCROLL HANDLER
+// Header state + hero-logo cross-fade + scroll-to-top + progress.
+// One rAF-throttled passive listener drives all of them.
+// ============================================================
+
+const siteHeader = document.querySelector('.site-header');
+const heroLogoEl = document.querySelector('.hero-logo');
+const headerLogoEl = document.querySelector('.site-logo');
+const scrollTopBtn = document.getElementById('scroll-top');
+const progressBar = document.querySelector('.scroll-progress .bar');
+
+const headerHeightPx =
+  parseInt(getComputedStyle(root).getPropertyValue('--header-height'), 10) || 68;
+
+// Fade begins when the hero logo's bottom is (headerHeight + 120)px from
+// the top, and completes when it reaches the header's bottom edge.
+const FADE_START = headerHeightPx + 120;
+const FADE_END = headerHeightPx;
+
+if (progressBar) {
+  const r = progressBar.r.baseVal.value;
+  progressBar.style.setProperty('--circumference', String(2 * Math.PI * r));
+}
+
+let hideBtnTimer = null;
+
+function syncLogoOpacity() {
+  if (!heroLogoEl || !headerLogoEl) return;
+
+  const bottom = heroLogoEl.getBoundingClientRect().bottom;
+
+  let t; // 0 = hero logo fully visible, 1 = header logo fully visible
+  if (bottom >= FADE_START) {
+    t = 0;
+  } else if (bottom <= FADE_END) {
+    t = 1;
+  } else {
+    t = (FADE_START - bottom) / (FADE_START - FADE_END);
+  }
+
+  // Respect reduced-motion: snap instead of interpolate
+  if (reducedMotion) t = t >= 0.5 ? 1 : 0;
+
+  heroLogoEl.style.opacity = 1 - t;
+  headerLogoEl.style.opacity = t;
+  heroLogoEl.style.pointerEvents = t > 0.9 ? 'none' : '';
+  headerLogoEl.style.pointerEvents = t < 0.1 ? 'none' : '';
+}
+
+function syncScrollTop(y) {
+  if (!scrollTopBtn) return;
+
+  if (y > 400) {
+    clearTimeout(hideBtnTimer);
+    if (scrollTopBtn.hidden) {
+      scrollTopBtn.hidden = false;
+      // Let the element lay out before transitioning it in
+      requestAnimationFrame(() => scrollTopBtn.classList.add('visible'));
+    } else {
+      scrollTopBtn.classList.add('visible');
+    }
+  } else if (!scrollTopBtn.hidden) {
+    scrollTopBtn.classList.remove('visible');
+    // Restore `hidden` once faded out, so the invisible button is not
+    // left behind as a tab stop.
+    clearTimeout(hideBtnTimer);
+    hideBtnTimer = setTimeout(() => {
+      if (!scrollTopBtn.classList.contains('visible')) scrollTopBtn.hidden = true;
+    }, 260);
+  }
+}
+
+function syncProgress(y) {
+  if (!progressBar) return;
+  const max = document.documentElement.scrollHeight - window.innerHeight;
+  const ratio = max > 0 ? Math.min(y / max, 1) : 0;
+  progressBar.style.setProperty('--progress', String(ratio));
+}
+
+function onScroll() {
+  const y = window.scrollY;
+
+  if (siteHeader) siteHeader.classList.toggle('is-scrolled', y > 8);
+  syncLogoOpacity();
+  syncScrollTop(y);
+  syncProgress(y);
+}
+
+let rafQueued = false;
+
+window.addEventListener(
+  'scroll',
+  () => {
+    if (rafQueued) return;
+    rafQueued = true;
+    requestAnimationFrame(() => {
+      rafQueued = false;
+      onScroll();
+    });
+  },
+  { passive: true }
+);
+
+window.addEventListener('resize', () => syncProgress(window.scrollY), { passive: true });
+
+// Resolve correct state immediately (handles deep-links / mid-scroll refresh)
+onScroll();
+
+if (scrollTopBtn) {
+  scrollTopBtn.addEventListener('click', () => {
+    window.scrollTo({ top: 0, behavior: reducedMotion ? 'auto' : 'smooth' });
+  });
+}
 
 // ============================================================
 // PRIVACY POLICY MODAL
 // ============================================================
 
-const privacyModal    = document.getElementById('privacy-modal');
-const privacyTrigger  = document.getElementById('privacy-trigger');
-const privacyClose    = document.getElementById('privacy-modal-close');
+const privacyModal = document.getElementById('privacy-modal');
+const privacyTrigger = document.getElementById('privacy-trigger');
+const privacyClose = document.getElementById('privacy-modal-close');
 const privacyCloseBtn = document.getElementById('privacy-modal-close-btn');
 
-function openPrivacyModal() {
-  privacyModal.classList.add('modal-open');
-  privacyModal.setAttribute('aria-hidden', 'false');
-  document.body.style.overflow = 'hidden';
-  privacyClose.focus();
-}
+if (privacyModal && privacyTrigger && privacyClose && privacyCloseBtn) {
+  const openPrivacyModal = () => {
+    privacyModal.classList.add('modal-open');
+    privacyModal.setAttribute('aria-hidden', 'false');
+    // scrollbar-gutter on <html> keeps this from shifting the layout
+    document.body.style.overflow = 'hidden';
+    privacyClose.focus();
+  };
 
-function closePrivacyModal() {
-  privacyModal.classList.remove('modal-open');
-  privacyModal.setAttribute('aria-hidden', 'true');
-  document.body.style.overflow = '';
-  privacyTrigger.focus();
-}
+  const closePrivacyModal = () => {
+    privacyModal.classList.remove('modal-open');
+    privacyModal.setAttribute('aria-hidden', 'true');
+    document.body.style.overflow = '';
+    privacyTrigger.focus();
+  };
 
-privacyTrigger.addEventListener('click', (e) => {
-  e.preventDefault();
-  openPrivacyModal();
-});
+  privacyTrigger.addEventListener('click', (e) => {
+    e.preventDefault();
+    openPrivacyModal();
+  });
 
-privacyClose.addEventListener('click', closePrivacyModal);
-privacyCloseBtn.addEventListener('click', closePrivacyModal);
+  privacyClose.addEventListener('click', closePrivacyModal);
+  privacyCloseBtn.addEventListener('click', closePrivacyModal);
 
-// Close on backdrop click
-privacyModal.addEventListener('click', (e) => {
-  if (e.target === privacyModal) closePrivacyModal();
-});
+  // Close on backdrop click
+  privacyModal.addEventListener('click', (e) => {
+    if (e.target === privacyModal) closePrivacyModal();
+  });
 
-// Keyboard: Escape + focus trap
-privacyModal.addEventListener('keydown', (e) => {
-  if (e.key === 'Escape') { closePrivacyModal(); return; }
-
-  if (e.key === 'Tab') {
-    const focusable = Array.from(
-      privacyModal.querySelectorAll('a, button, [tabindex="0"]')
-    ).filter(el => !el.closest('[aria-hidden="true"]'));
-    const first = focusable[0];
-    const last  = focusable[focusable.length - 1];
-
-    if (e.shiftKey && document.activeElement === first) {
-      e.preventDefault(); last.focus();
-    } else if (!e.shiftKey && document.activeElement === last) {
-      e.preventDefault(); first.focus();
+  // Keyboard: Escape + focus trap
+  privacyModal.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+      closePrivacyModal();
+      return;
     }
-  }
-});
+
+    if (e.key === 'Tab') {
+      const focusable = Array.from(
+        privacyModal.querySelectorAll('a, button, [tabindex="0"]')
+      ).filter((el) => !el.closest('[aria-hidden="true"]'));
+      if (!focusable.length) return;
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+
+      if (e.shiftKey && document.activeElement === first) {
+        e.preventDefault();
+        last.focus();
+      } else if (!e.shiftKey && document.activeElement === last) {
+        e.preventDefault();
+        first.focus();
+      }
+    }
+  });
+}
