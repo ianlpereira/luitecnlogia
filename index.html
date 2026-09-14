@@ -11,10 +11,11 @@
       el.classList.add('js');
       try {
         var t = localStorage.getItem('lui-theme');
-        if (t === 'dark' || t === 'light') el.setAttribute('data-theme', t);
+        el.setAttribute('data-theme', (t === 'dark' || t === 'light') ? t : 'dark');
         var p = localStorage.getItem('lui-palette');
         el.setAttribute('data-palette', /^[0-4]$/.test(p) ? p : '0');
       } catch (e) {
+        el.setAttribute('data-theme', 'dark');
         el.setAttribute('data-palette', '0');
       }
     })();

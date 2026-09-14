@@ -9,20 +9,17 @@ const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matc
 
 // ============================================================
 // THEME CONTROLLER
-// Resolution order: explicit user choice → OS preference.
-// The initial attribute is stamped by the inline script in <head>
-// so there is no flash of the wrong theme before this runs.
+// Defaults to dark; the inline script in <head> stamps 'dark' (or
+// the visitor's stored choice) before first paint, so there is no
+// flash of the wrong theme before this runs.
 // ============================================================
 
 const THEME_KEY = 'lui-theme';
 const themeToggle = document.getElementById('theme-toggle');
 const themeMeta = document.querySelector('meta[name="theme-color"]');
-const osDark = window.matchMedia('(prefers-color-scheme: dark)');
 
 function resolvedTheme() {
-  const explicit = root.getAttribute('data-theme');
-  if (explicit === 'dark' || explicit === 'light') return explicit;
-  return osDark.matches ? 'dark' : 'light';
+  return root.getAttribute('data-theme') === 'light' ? 'light' : 'dark';
 }
 
 // Keep the browser chrome colour in step with the painted page.
@@ -85,14 +82,6 @@ if (themeToggle) {
     applyTheme(resolvedTheme() === 'dark' ? 'light' : 'dark');
   });
 }
-
-// Follow the OS while the visitor has not made an explicit choice
-osDark.addEventListener('change', () => {
-  if (!root.hasAttribute('data-theme')) {
-    syncThemeToggle();
-    syncThemeMeta();
-  }
-});
 
 syncThemeToggle();
 syncThemeMeta();
